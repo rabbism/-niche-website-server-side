@@ -3,7 +3,7 @@ const app = express()
 const port =process.env.PORT || 5000
 var cors = require('cors')
 require('dotenv').config()
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 
 app.use(cors())
 app.use(express.json());
@@ -26,10 +26,17 @@ async function run() {
         const products =await cursor.toArray()
         res.send(products)
       })
+      app.get('/product/:id' , async(req,res) =>{
+        const id = req.params.id;
+        const quary ={_id:ObjectId(id)}
+        const user = await productCollection.findOne(quary);
+        res.send(user);
+      })
       // order 
 
       app.post('/order', async (req, res) => {
         const order = req.body;
+        order.creatAt =new Date() ;
         const result = await orderCollection.insertOne(order);
         res.json(result);
     })
@@ -43,6 +50,12 @@ async function run() {
         const cursor =explorCollection.find({});
         const products =await cursor.toArray()
         res.send(products)
+      })
+      app.get('/explor/:id' , async(req,res) =>{
+        const id = req.params.id;
+        const quary ={_id:ObjectId(id)}
+        const user = await explorCollection.findOne(quary);
+        res.send(user);
       })
       app.get('/review', async (req,res) =>{
         const cursor =reviewCollection.find({});
