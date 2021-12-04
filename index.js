@@ -26,12 +26,13 @@ async function run() {
         const products =await cursor.toArray()
         res.send(products)
       })
-      app.get('/product/:id' , async(req,res) =>{
+      app.get('/products/:id', async (req, res) => {
         const id = req.params.id;
-        const quary ={_id:ObjectId(id)}
-        const user = await productCollection.findOne(quary);
+        const query = { _id: ObjectId(id) };
+        const user = await productCollection.findOne(query);
+        // console.log('load user with id: ', id);
         res.send(user);
-      })
+    })
       // order 
 
       app.post('/order', async (req, res) => {
