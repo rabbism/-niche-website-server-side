@@ -52,12 +52,13 @@ async function run() {
         const products =await cursor.toArray()
         res.send(products)
       })
-      app.get('/explor/:id' , async(req,res) =>{
+      app.get('/explor/:id', async (req, res) => {
         const id = req.params.id;
-        const quary ={_id:ObjectId(id)}
-        const user = await explorCollection.findOne(quary);
+        const query = { _id: ObjectId(id) };
+        const user = await explorCollection.findOne(query);
+        // console.log('load user with id: ', id);
         res.send(user);
-      })
+    })
       app.get('/review', async (req,res) =>{
         const cursor =reviewCollection.find({});
         const review =await cursor.toArray()
