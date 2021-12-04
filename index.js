@@ -18,6 +18,7 @@ async function run() {
         const productCollection = database.collection('sunglass');
         const explorCollection = database.collection('explor');
         const reviewCollection = database.collection('review');
+        const orderCollection =database.collection('order');
      
       // query for movies that have a runtime less than 15 minutes
       app.get('/products', async (req,res) =>{
@@ -25,6 +26,18 @@ async function run() {
         const products =await cursor.toArray()
         res.send(products)
       })
+      // order 
+
+      app.post('/order', async (req, res) => {
+        const order = req.body;
+        const result = await orderCollection.insertOne(order);
+        res.json(result);
+    })
+    app.get('/order', async (req,res) =>{
+      const cursor =orderCollection.find({});
+      const products =await cursor.toArray()
+      res.send(products)
+    })
 
           app.get('/explor', async (req,res) =>{
         const cursor =explorCollection.find({});
