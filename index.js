@@ -16,11 +16,18 @@ async function run() {
       await client.connect();
          const database = client.db('chasmish');
         const productCollection = database.collection('sunglass');
+        const explorCollection = database.collection('explor');
         const reviewCollection = database.collection('review');
      
       // query for movies that have a runtime less than 15 minutes
       app.get('/products', async (req,res) =>{
         const cursor =productCollection.find({});
+        const products =await cursor.toArray()
+        res.send(products)
+      })
+
+          app.get('/explor', async (req,res) =>{
+        const cursor =explorCollection.find({});
         const products =await cursor.toArray()
         res.send(products)
       })
